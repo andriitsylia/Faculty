@@ -1,0 +1,26 @@
+﻿@using Faculty.ViewModel
+@model CoursesListViewModel
+@{
+    ViewData["Title"] = "CoursesList";
+}
+
+<h1>List of the courses</h1>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model.Courses)
+        {
+            <tr>
+                <td>@course.Id</td>
+                <td>@course.Name</td>
+                <td>@course.Description</td>
+            </tr>
+        }
+    </tbody>
+</table>

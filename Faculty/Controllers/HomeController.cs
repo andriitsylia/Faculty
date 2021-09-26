@@ -1,4 +1,6 @@
-﻿using Faculty.Models;
+﻿using Faculty.Interfaces;
+using Faculty.Models;
+using Faculty.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,11 +13,32 @@ namespace Faculty.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly AppContext _dbContext;
+        public HomeController(AppContext dbContext)
         {
-            _logger = logger;
+            _dbContext = dbContext;
+            if (_dbContext.Courses.Count() == 0)
+            {
+                IAllCourses allCourses = new PrepareAllCoursesListToInsertToDatabase();
+                _dbContext.Courses.AddRange(allCourses.Courses);
+                _dbContext.SaveChanges();
+            }
+
+            if (_dbContext.Groups.Count() == 0)
+            {
+                IAllGroups allGroups = new PrepareAllGroupsListToInsertToDatabase();
+                _dbContext.Groups.AddRange(allGroups.Groups);
+                _dbContext.SaveChanges();
+            }
+
+            if (_dbContext.Students.Count() == 0)
+            {
+                IAllStudents allStudents = new PrepareAllStudentsListToInsertToDatabase();
+                _dbContext.Students.AddRange(allStudents.Students);
+                _dbContext.SaveChanges();
+            }
+
+            
         }
 
         public IActionResult Index()
