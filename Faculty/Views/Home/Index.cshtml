@@ -1,6 +1,35 @@
-﻿
+﻿@using Faculty.Models
+@model IEnumerable<Student>
 @{
     ViewData["Title"] = "Faculty";
 }
 
 <h1>@ViewData["Title"]</h1>
+<h1>List of the students</h1>
+<select class="form-select">
+    <option selected>Choose the student...</option>
+    @for (int i = 0; i < Model.Count(); i++)
+    {
+        <option value="@i">@(Model.ElementAt(i).FirstName + " " + Model.ElementAt(i).LastName)</option>
+    }
+</select>
+<table class=" = table table-bordered table-striped">
+    
+    <thead>
+        <tr>
+            <th>GroupId</th>
+            <th>FirstName</th>
+            <th>LastName</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var student in Model)
+        {
+            <tr>
+                <td>@student.GroupId</td>
+                <td>@student.FirstName</td>
+                <td>@student.LastName</td>
+            </tr>
+        }
+    </tbody>
+</table>

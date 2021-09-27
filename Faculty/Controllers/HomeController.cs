@@ -17,33 +17,30 @@ namespace Faculty.Controllers
         public HomeController(AppContext dbContext)
         {
             _dbContext = dbContext;
-            if (_dbContext.Courses.Count() == 0)
+            if (!_dbContext.Courses.Any())
             {
                 IAllCourses allCourses = new PrepareAllCoursesListToInsertToDatabase();
                 _dbContext.Courses.AddRange(allCourses.Courses);
-                _dbContext.SaveChanges();
             }
 
-            if (_dbContext.Groups.Count() == 0)
+            if (!_dbContext.Groups.Any())
             {
                 IAllGroups allGroups = new PrepareAllGroupsListToInsertToDatabase();
                 _dbContext.Groups.AddRange(allGroups.Groups);
-                _dbContext.SaveChanges();
             }
 
-            if (_dbContext.Students.Count() == 0)
+            if (!_dbContext.Students.Any())
             {
                 IAllStudents allStudents = new PrepareAllStudentsListToInsertToDatabase();
                 _dbContext.Students.AddRange(allStudents.Students);
-                _dbContext.SaveChanges();
             }
-
             
+            _dbContext.SaveChanges();
         }
 
         public IActionResult Index()
         {
-            return View();
+            return View(_dbContext.Students.OrderBy(o => o.LastName).ToList());
         }
 
         public IActionResult Privacy()
