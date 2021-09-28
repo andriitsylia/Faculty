@@ -1,5 +1,5 @@
+using Faculty.Configurations;
 using Faculty.Interfaces;
-using Faculty.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,9 +30,9 @@ namespace Faculty
             string dbConnection = dbConnectionBuilder.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppContext>(options => options.UseSqlServer(dbConnection));
 
-            services.AddTransient<IAllCourses, PrepareAllCoursesListToInsertToDatabase>();
-            services.AddTransient<IAllGroups, PrepareAllGroupsListToInsertToDatabase>();
-            services.AddTransient<IAllStudents, PrepareAllStudentsListToInsertToDatabase>();
+            services.AddTransient<IAllCourses, CourseConfiguration>();
+            services.AddTransient<IAllGroups, GroupConfiguration>();
+            services.AddTransient<IAllStudents, StudentConfiguration>();
 
 
             services.AddControllersWithViews();

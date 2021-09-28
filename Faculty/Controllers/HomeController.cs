@@ -1,6 +1,6 @@
 ﻿using Faculty.Interfaces;
 using Faculty.Models;
-using Faculty.Services;
+using Faculty.Configurations;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -19,19 +19,19 @@ namespace Faculty.Controllers
             _dbContext = dbContext;
             if (!_dbContext.Courses.Any())
             {
-                IAllCourses allCourses = new PrepareAllCoursesListToInsertToDatabase();
+                IAllCourses allCourses = new CourseConfiguration();
                 _dbContext.Courses.AddRange(allCourses.Courses);
             }
 
             if (!_dbContext.Groups.Any())
             {
-                IAllGroups allGroups = new PrepareAllGroupsListToInsertToDatabase();
+                IAllGroups allGroups = new GroupConfiguration();
                 _dbContext.Groups.AddRange(allGroups.Groups);
             }
 
             if (!_dbContext.Students.Any())
             {
-                IAllStudents allStudents = new PrepareAllStudentsListToInsertToDatabase();
+                IAllStudents allStudents = new StudentConfiguration();
                 _dbContext.Students.AddRange(allStudents.Students);
             }
             

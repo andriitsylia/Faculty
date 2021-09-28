@@ -1,15 +1,31 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace Faculty.Models
 {
+    [Table("Student")]
     public class Student
     {
-        public int Id { get; set; }
-        public int GroupId { get; set; }
+        [Key]
+        [Required]
+        public int StudentId { get; set; }
+
+        [Required]
+        [MaxLength(30, ErrorMessage = "FirstName must be less than 30 symbols")]
         public string FirstName { get; set; }
+
+        [Required]
+        [MaxLength(30, ErrorMessage = "LastName must be less than 30 symbols")]
         public string LastName { get; set; }
+
+        [ForeignKey(nameof(Group))]
+        public int GroupId { get; set; }
+
+        public Group Group { get; set; }
+
     }
 }
