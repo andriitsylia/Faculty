@@ -40,7 +40,7 @@ namespace Faculty.Controllers
 
         public IActionResult Index()
         {
-            return View(_dbContext.Students.OrderBy(o => o.LastName).ToList());
+            return View(_dbContext.Students.OrderBy(o => o.FirstName).ToList());
         }
 
         public IActionResult Privacy()

@@ -8,21 +8,21 @@
 <table class=" = table table-bordered table-striped table-sm">
     <thead>
         <tr>
-            <th>Id</th>
-            <th>GroupId</th>
+            <th>StudentId</th>
             <th>FirstName</th>
             <th>LastName</th>
+            <th>GroupId</th>
         </tr>
     </thead>
     <tbody>
         @foreach (var student in Model.Students)
         {
-            <tr>
-                <td>@student.StudentId</td>
-                <td>@student.GroupId</td>
-                <td>@student.FirstName</td>
-                <td>@student.LastName</td>
-            </tr>
+        <tr>
+            <td>@student.StudentId</td>
+            <td>@student.FirstName</td>
+            <td>@student.LastName</td>
+            <td>@student.GroupId</td>
+        </tr>
         }
     </tbody>
 </table>
