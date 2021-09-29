@@ -23,7 +23,7 @@ namespace Faculty.Models
 
         public Course Course { get; set; }
 
-        //public Student Students { get; set; }
+        public ICollection<Student> Students { get; set; }
 
     }
 }

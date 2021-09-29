@@ -1,4 +1,5 @@
 ﻿using Faculty.Interfaces;
+using Faculty.Repositories;
 using Faculty.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,18 +11,16 @@ namespace Faculty.Controllers
 {
     public class GroupsController : Controller
     {
-        private readonly IAllGroups _groups;
+        private readonly GroupsRepository _groupsRepository;
 
-        public GroupsController(IAllGroups groups)
+        public GroupsController(GroupsRepository groupsRepository)
         {
-            _groups = groups;
+            _groupsRepository = groupsRepository;
         }
 
-        public ViewResult GroupsList()
+        public IActionResult Index()
         {
-            GroupsListViewModel groupsList = new GroupsListViewModel();
-            groupsList.Groups = _groups.Groups;
-            return View(groupsList);
+            return View(_groupsRepository.GetGroups());
         }
     }
 }

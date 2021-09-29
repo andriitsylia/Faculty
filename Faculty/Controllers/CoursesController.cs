@@ -1,4 +1,5 @@
 ﻿using Faculty.Interfaces;
+using Faculty.Repositories;
 using Faculty.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -10,19 +11,16 @@ namespace Faculty.Controllers
 {
     public class CoursesController: Controller
     {
+        private readonly CoursesRepository _coursesRepository;
 
-        private readonly IAllCourses _courses;
-
-        public CoursesController(IAllCourses courses)
+        public CoursesController(CoursesRepository coursesRepositpry)
         {
-            _courses = courses;
+            _coursesRepository = coursesRepositpry;
         }
 
-        public ViewResult CoursesList()
+        public IActionResult Index()
         {
-            CoursesListViewModel coursesList = new CoursesListViewModel();
-            coursesList.Courses = _courses.Courses;
-            return View(coursesList);
+            return View(_coursesRepository.GetCourses());
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Faculty.Interfaces;
 using Faculty.Models;
+using Faculty.Repositories;
 using Faculty.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,18 +12,16 @@ namespace Faculty.Controllers
 {
     public class StudentsController : Controller
     {
-        private readonly IAllStudents _students;
+        private readonly StudentsRepository _studentsRepository;
 
-        public StudentsController(IAllStudents students)
+        public StudentsController(StudentsRepository studentsRepository)
         {
-            _students = students;
+            _studentsRepository = studentsRepository;
         }
 
-        public ViewResult StudentsList()
+        public IActionResult Index()
         {
-            StudentsListViewModel studentsModel = new StudentsListViewModel();
-            studentsModel.Students = _students.Students;
-            return View(studentsModel);
+            return View(_studentsRepository.GetStudents());
         }
     }
 }

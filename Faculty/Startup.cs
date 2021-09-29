@@ -1,5 +1,6 @@
 using Faculty.Configurations;
 using Faculty.Interfaces;
+using Faculty.Repositories;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -33,6 +34,9 @@ namespace Faculty
             services.AddTransient<IAllCourses, CourseConfiguration>();
             services.AddTransient<IAllGroups, GroupConfiguration>();
             services.AddTransient<IAllStudents, StudentConfiguration>();
+            services.AddTransient<CoursesRepository>();
+            services.AddTransient<GroupsRepository>();
+            services.AddTransient<StudentsRepository>();
 
 
             services.AddControllersWithViews();

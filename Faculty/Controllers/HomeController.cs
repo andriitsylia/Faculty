@@ -8,39 +8,44 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Faculty.Repositories;
 
 namespace Faculty.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly AppContext _dbContext;
-        public HomeController(AppContext dbContext)
+        //private readonly AppContext _dbContext;
+        private readonly CoursesRepository _courseRepository;
+        public HomeController(CoursesRepository courseRepository)
         {
-            _dbContext = dbContext;
-            if (!_dbContext.Courses.Any())
-            {
-                IAllCourses allCourses = new CourseConfiguration();
-                _dbContext.Courses.AddRange(allCourses.Courses);
-            }
+            _courseRepository = courseRepository;
+            //_dbContext = dbContext;
+            //if (!_dbContext.Courses.Any())
+            //{
+            //    IAllCourses allCourses = new CourseConfiguration();
+            //    _dbContext.Courses.AddRange(allCourses.Courses);
+            //}
 
-            if (!_dbContext.Groups.Any())
-            {
-                IAllGroups allGroups = new GroupConfiguration();
-                _dbContext.Groups.AddRange(allGroups.Groups);
-            }
+            //if (!_dbContext.Groups.Any())
+            //{
+            //    IAllGroups allGroups = new GroupConfiguration();
+            //    _dbContext.Groups.AddRange(allGroups.Groups);
+            //}
 
-            if (!_dbContext.Students.Any())
-            {
-                IAllStudents allStudents = new StudentConfiguration();
-                _dbContext.Students.AddRange(allStudents.Students);
-            }
+            //if (!_dbContext.Students.Any())
+            //{
+            //    IAllStudents allStudents = new StudentConfiguration();
+            //    _dbContext.Students.AddRange(allStudents.Students);
+            //}
             
-            _dbContext.SaveChanges();
+            //_dbContext.SaveChanges();
         }
 
         public IActionResult Index()
         {
-            return View(_dbContext.Students.OrderBy(o => o.FirstName).ToList());
+            //return View(_dbContext.Students.OrderBy(o => o.FirstName).ToList());
+            var model = _courseRepository.GetCourses();
+            return View(model);
         }
 
         public IActionResult Privacy()

@@ -1,0 +1,26 @@
+﻿@using Faculty.Repositories
+@model IQueryable<Group>
+@{
+    ViewData["Title"] = "GroupsList";
+}
+
+<h1>List of the groups</h1>
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th>GroupId</th>
+            <th>Name</th>
+            <th>CourseId</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var group in Model)
+        {
+        <tr>
+            <td>@group.GroupId</td>
+            <td>@group.Name</td>
+            <td>@group.CourseId</td>
+        </tr>
+        }
+    </tbody>
+</table>

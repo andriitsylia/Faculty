@@ -21,6 +21,6 @@ namespace Faculty.Models
         [MaxLength(256, ErrorMessage = "Description must be less than 256 symbols")]
         public string Description { get; set; }
 
-        //public Group Groups { get; set; }
+        public ICollection<Group> Groups { get; set; }
     }
 }

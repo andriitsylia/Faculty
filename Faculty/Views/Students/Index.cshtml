@@ -1,5 +1,5 @@
-﻿@using Faculty.ViewModel
-@model StudentsListViewModel
+﻿@using Faculty.Repositories
+@model IQueryable<Student>
 @{
     ViewData["Title"] = "StudentsList";
 }
@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var student in Model.Students)
+        @foreach (var student in Model)
         {
         <tr>
             <td>@student.StudentId</td>
