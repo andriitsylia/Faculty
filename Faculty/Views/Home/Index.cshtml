@@ -8,32 +8,39 @@
 <h1>List of the courses</h1>
 <select class="form-select">
     <option selected>Choose the course...</option>
-    <!--@for (int i = 0; i < Model.Count(); i++)
-    {
-        <option value="@i">@Model.ElementAt(i).Name</option>
-    }-->
     @foreach (var course in Model)
     {
-        <option>@course.Name</option>
+        <option value="@course.CourseId">@course.Name</option>
     }
 </select>
-<table class=" = table table-bordered table-striped">
-    
-    <thead>
-        <tr>
-            <th>CourseId</th>
-            <th>Name</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var course in Model)
-        {
-        <tr>
-            <td>@course.CourseId</td>
-            <td>@course.Name</td>
-            <td>@course.Description</td>
-        </tr>
-        }
-    </tbody>
-</table>
+<form method="post" asp-controller="Home" asp-action="ChooseCourse">
+@foreach (var course in Model)
+{
+    <div class="form-check">
+        <input class="form-check-input" type="radio" name="flexRadioDefault" id="@course.CourseId" value="@course.CourseId">
+        <label class="form-check-label" for="@course.CourseId">
+            @course.Name
+        </label>
+    </div>
+}
+</form>
+    <table class=" = table table-bordered table-striped">
+
+        <thead>
+            <tr>
+                <th>CourseId</th>
+                <th>Name</th>
+                <th>Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var course in Model)
+            {
+                <tr>
+                    <td>@course.CourseId</td>
+                    <td>@course.Name</td>
+                    <td>@course.Description</td>
+                </tr>
+            }
+        </tbody>
+    </table>

@@ -1,0 +1,15 @@
+﻿@using Faculty.Repositories
+@model IEnumerable<Course>
+@{
+    ViewData["Title"] = "Course";
+}
+
+<h1>@ViewData["Title"]</h1>
+@foreach (var course in Model)
+{
+    <tr>
+        <td>@course.CourseId</td>
+        <td>@course.Name</td>
+        <td>@course.Description</td>
+    </tr>
+}

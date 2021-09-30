@@ -37,14 +37,20 @@ namespace Faculty.Controllers
             //    IAllStudents allStudents = new StudentConfiguration();
             //    _dbContext.Students.AddRange(allStudents.Students);
             //}
-            
+
             //_dbContext.SaveChanges();
         }
 
         public IActionResult Index()
         {
-            //return View(_dbContext.Students.OrderBy(o => o.FirstName).ToList());
             var model = _courseRepository.GetCourses();
+            return View(model);
+        }
+
+        //[HttpPost]
+        public IActionResult ChooseCourse(int courseId)
+        {
+            var model = new List<Course> { _courseRepository.GetCourseById(courseId) };
             return View(model);
         }
 
