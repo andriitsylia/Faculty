@@ -47,11 +47,18 @@ namespace Faculty.Controllers
             return View(model);
         }
 
-        //[HttpPost]
+        [HttpPost]
         public IActionResult ChooseCourse(int courseId)
         {
-            var model = new List<Course> { _courseRepository.GetCourseById(courseId) };
-            return View(model);
+            if (courseId != 0)
+            {
+                var model = new List<Course> { _courseRepository.GetCourseById(courseId) };
+                return View(model);
+            }
+            else
+            {
+                return RedirectToAction("Index");
+            }
         }
 
         public IActionResult Privacy()
