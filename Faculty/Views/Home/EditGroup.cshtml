@@ -1,0 +1,19 @@
+﻿@using Faculty.Models
+@model Group
+@{
+    ViewData["Title"] = "Edit group's profile";
+}
+
+<h1>@ViewData["Title"] - @Model.Name</h1>
+
+
+<div class="form-group">
+    <form method="post" class="form-inline" role="form" asp-controller="Home" asp-action="SaveGroup">
+        <input type="hidden" asp-for="GroupId" />
+        <div asp-validation-summary="All"></div>
+        <label class="col-md-2 control-label" asp-for="Name">Name: </label><br>
+        <input class="col-md-3 form-control" asp-for="Name" /><br>
+        <span asp-validation-for="Name"></span>
+        <input type="submit" value="Save">
+    </form>
+</div>

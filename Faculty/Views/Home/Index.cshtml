@@ -1,40 +1,73 @@
-﻿@using Faculty.Repositories
-@model IEnumerable<Course>
+﻿@using Faculty.ViewModel;
+@model FullListViewModel
 @{
     ViewData["Title"] = "Faculty";
 }
 
 <h1>@ViewData["Title"]</h1>
-<h1>List of the courses</h1>
-<form method="post" asp-controller="Home" asp-action="ChooseCourse">
-    <p>
-        <select name ="CourseId" class="form-select">
-            <option value="0" selected>Choose the course...</option>
-            @foreach (var course in Model)
+
+<div class="form-group">
+    <form method="post" class="form-inline" role="form">
+        <label for="course" class="col-md-2 control-label">Course:</label>
+        <select name="course" id="course" class="col-md-3 form-control">
+            <option value="0" selected>All</option>
+            @foreach (var course in Model.Courses)
             {
                 <option value="@course.CourseId">@course.Name</option>
             }
         </select>
-        <input type="submit" value="Submit">
-    </p>
-</form>
-    <table class=" = table table-bordered table-striped">
-
-        <thead>
-            <tr>
-                <th>CourseId</th>
-                <th>Name</th>
-                <th>Description</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var course in Model)
+        <input type="submit" asp-controller="Home" asp-action="ChooseCourse" value="Groups">
+    </form>
+</div>
+<div class="form-group">
+    <form method="post" class="form-inline" >
+        <label for="group" class="col-md-2 control-label">Group:</label>
+        <select name="group" id="group" class="col-md-3 form-control">
+            <option value="0" selected>All</option>
+            @foreach (var group in Model.Groups)
             {
-                <tr>
-                    <td>@course.CourseId</td>
-                    <td>@course.Name</td>
-                    <td>@course.Description</td>
-                </tr>
+                <option value="@group.GroupId">@group.Name</option>
             }
-        </tbody>
-    </table>
+        </select>
+        <input type="submit" name="submit" asp-controller="Home" asp-action="ChooseGroup" value="Students">
+        <input type="submit" name="edit" asp-controller="Home" asp-action="EditGroup" asp-route-id="group" value="Edit">
+        <input type="submit" name="delete" asp-controller="Home" asp-action="DeleteGroup" value="Delete">
+    </form>
+</div>
+<div class="form-group">
+    <form method="post" class="form-inline">
+        <label for="student" class="col-md-2 control-label">Student:</label>
+        <select name="student" id="student" class="col-md-3 form-control">
+            <option value="0" selected>All</option>
+            @foreach (var student in Model.Students)
+            {
+                <option value="@student.StudentId">@(student.FirstName + " " + student.LastName)</option>
+            }
+        </select>
+        <input type="submit" asp-controller="Home" asp-action="EditStudent" value="Edit">
+    </form>
+</div>
+
+<div class="row">
+    <div class="column col-md-3">
+        <h3>Courses</h3>
+        @foreach (var course in Model.Courses)
+        {
+            @course.Name<br>
+        }
+    </div>
+    <div class="column col-md-3">
+        <h3>Groups</h3>
+        @foreach (var group in Model.Groups)
+        {
+            @group.Name<br>
+        }
+    </div>
+    <div class="column col-md-6">
+        <h3>Students</h3>
+        @foreach (var student in Model.Students)
+        {
+            @(student.FirstName + " " + student.LastName)<br>
+        }
+    </div>
+</div>

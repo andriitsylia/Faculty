@@ -31,26 +31,26 @@ namespace Faculty.Repositories
             return _appContext.Groups.Single(g => g.GroupId == groupId);
         }
 
-        public int SaveGroup(Group group)
+        public void SaveGroup(Group group)
         {
-            return 1;
+           _appContext.Entry(group).State = EntityState.Modified;
+            _appContext.SaveChanges();
         }
 
-        public void DeleteGroup(Group group)
+        public bool DeleteGroup(Group group)
         {
-            if (_appContext.Groups
+            if (!_appContext.Groups
                 .Where(g => g.GroupId == group.GroupId)
                 .Include(s => s.Students)
                 .Any())
             {
-                //do not remove group
+                //the group hasn't students, delete
+                //_appContext.Groups.Remove(group);
+                //_appContext.SaveChanges();
+                return true;
             }
-            else
-            {
-                _appContext.Groups.Remove(group);
-                _appContext.SaveChanges();
-            }
-            
+            //the group has students, do not delete
+            return false;
         }
     }
 }

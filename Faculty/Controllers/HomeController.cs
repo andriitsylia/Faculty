@@ -9,56 +9,137 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Faculty.Repositories;
+using Faculty.ViewModel;
 
 namespace Faculty.Controllers
 {
     public class HomeController : Controller
     {
-        //private readonly AppContext _dbContext;
-        private readonly CoursesRepository _courseRepository;
-        public HomeController(CoursesRepository courseRepository)
+        private readonly CoursesRepository _coursesRepository;
+        private readonly GroupsRepository _groupsRepository;
+        private readonly StudentsRepository _studentsRepository;
+
+        private int _activeCourse = 0;
+        private int _activeGroup = 0;
+        private int _activeStudent = 0;
+        private FullListViewModel _model;
+        public HomeController(CoursesRepository coursesRepository, 
+                              GroupsRepository groupsRepository,
+                              StudentsRepository studentsRepository)
         {
-            _courseRepository = courseRepository;
-            //_dbContext = dbContext;
-            //if (!_dbContext.Courses.Any())
-            //{
-            //    IAllCourses allCourses = new CourseConfiguration();
-            //    _dbContext.Courses.AddRange(allCourses.Courses);
-            //}
-
-            //if (!_dbContext.Groups.Any())
-            //{
-            //    IAllGroups allGroups = new GroupConfiguration();
-            //    _dbContext.Groups.AddRange(allGroups.Groups);
-            //}
-
-            //if (!_dbContext.Students.Any())
-            //{
-            //    IAllStudents allStudents = new StudentConfiguration();
-            //    _dbContext.Students.AddRange(allStudents.Students);
-            //}
-
-            //_dbContext.SaveChanges();
+            _coursesRepository = coursesRepository;
+            _groupsRepository = groupsRepository;
+            _studentsRepository = studentsRepository;
+            _model = Create(_activeCourse, _activeGroup, _activeStudent);
         }
 
-        public IActionResult Index()
+        public FullListViewModel Create(int course, int group, int student)
         {
-            var model = _courseRepository.GetCourses();
-            return View(model);
-        }
+            FullListViewModel model = new();
 
-        [HttpPost]
-        public IActionResult ChooseCourse(int courseId)
-        {
-            if (courseId != 0)
+            if (course != 0)
             {
-                var model = new List<Course> { _courseRepository.GetCourseById(courseId) };
-                return View(model);
+                model.Courses = new List<Course> { _coursesRepository.GetCourseById(course) };
             }
             else
             {
-                return RedirectToAction("Index");
+                model.Courses = _coursesRepository.GetCourses();
             }
+
+            if (group != 0)
+            {
+                if (course != 0)
+                {
+                    model.Groups = _groupsRepository.GetGroupsByCourseId(course);
+                }
+                else
+                {
+                    model.Groups = new List<Group> { _groupsRepository.GetGroupById(group) };
+                }
+            }
+            else
+            {
+                if (course != 0)
+                {
+                    model.Groups = _groupsRepository.GetGroupsByCourseId(course);
+                }
+                else
+                {
+                    model.Groups = _groupsRepository.GetGroups();
+                }
+            }
+
+            if (student != 0)
+            {
+                if (group != 0)
+                {
+                    model.Students = _studentsRepository.GetStudentsByGroupId(group);
+                }
+                else
+                {
+                    model.Students = new List<Student> { _studentsRepository.GetStudentById(student) };
+                }
+            }
+            else
+            {
+                if (group != 0)
+                {
+                    model.Students = _studentsRepository.GetStudentsByGroupId(group);
+                }
+                else
+                {
+                    model.Students = _studentsRepository.GetStudents();
+                }
+            }
+
+            _activeCourse = course;
+            _activeGroup = group;
+            _activeStudent = student;
+
+            return model;
+        }
+        public IActionResult Index()
+        {
+            return View(_model);
+        }
+
+        [HttpPost]
+        public IActionResult DeleteGroup(int group)
+        {
+            if (!_groupsRepository.DeleteGroup(new Group() { GroupId = group }))
+            {
+                ViewBag.DeleteGroup = "The group has students. Can't delete.";
+            }
+            else
+            {
+                ViewBag.DeleteGroup = "The group hasn't students. Can delete.";
+            }
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ChooseCourse(int course)
+        {
+            _model = Create(course, _activeGroup, _activeStudent);
+            return View(_model);
+        }
+
+        public IActionResult ChooseGroup(int group)
+        {
+            _model = Create(_activeCourse, group, _activeStudent);
+            return View(_model);
+        }
+
+        public IActionResult EditGroup(int group)
+        {
+            Group model = _groupsRepository.GetGroupById(group);
+            return View(model);
+        }
+
+        public IActionResult SaveGroup(Group model)
+        {
+            _groupsRepository.SaveGroup(model);
+             return RedirectToAction("Index");
         }
 
         public IActionResult Privacy()
