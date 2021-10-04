@@ -31,13 +31,9 @@ namespace Faculty
             string dbConnection = dbConnectionBuilder.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppContext>(options => options.UseSqlServer(dbConnection));
 
-            services.AddTransient<IAllCourses, CourseConfiguration>();
-            services.AddTransient<IAllGroups, GroupConfiguration>();
-            services.AddTransient<IAllStudents, StudentConfiguration>();
             services.AddTransient<CoursesRepository>();
             services.AddTransient<GroupsRepository>();
             services.AddTransient<StudentsRepository>();
-
 
             services.AddControllersWithViews();
         }

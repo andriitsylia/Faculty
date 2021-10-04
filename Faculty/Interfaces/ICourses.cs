@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Faculty.Interfaces
 {
-    public interface IAllCourses
+    public interface ICourses
     {
         public IEnumerable<Course> Courses { get; }
 

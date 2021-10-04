@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Faculty.Interfaces
 {
-    public interface IAllGroups
+    public interface IGroups
     {
         public IEnumerable<Group> Groups { get; }
     }

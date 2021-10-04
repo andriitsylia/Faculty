@@ -1,4 +1,5 @@
 ﻿using Faculty.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,9 +31,10 @@ namespace Faculty.Repositories
             return _appContext.Students.Single(s => s.StudentId == studentId);
         }
 
-        public int SaveStudent(Student student)
+        public void SaveStudent(Student student)
         {
-            return 1;
+            _appContext.Entry(student).State = EntityState.Modified;
+            _appContext.SaveChanges();
         }
 
         public void DeleteStudent(Student student)

@@ -30,10 +30,78 @@ namespace Faculty.Controllers
             _coursesRepository = coursesRepository;
             _groupsRepository = groupsRepository;
             _studentsRepository = studentsRepository;
-            _model = Create(_activeCourse, _activeGroup, _activeStudent);
+            _model = CreateModel(_activeCourse, _activeGroup, _activeStudent);
         }
 
-        public FullListViewModel Create(int course, int group, int student)
+        public IActionResult Index()
+        {
+            return View(_model);
+        }
+
+        public IActionResult ChooseCourse(int courseId)
+        {
+            _model = CreateModel(courseId, _activeGroup, _activeStudent);
+            return View(_model);
+        }
+
+        public IActionResult ChooseGroup(int groupId)
+        {
+            _model = CreateModel(_activeCourse, groupId, _activeStudent);
+            return View(_model);
+        }
+
+        public IActionResult EditGroup(int groupId)
+        {
+            if (groupId != 0)
+            {
+                Group model = _groupsRepository.GetGroupById(groupId);
+                return View(model);
+            }
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult SaveGroup(Group model)
+        {
+            _groupsRepository.SaveGroup(model);
+             return RedirectToAction("Index");
+        }
+
+        public IActionResult DeleteGroup(int groupId)
+        {
+            if (!_groupsRepository.DeleteGroup(new Group() { GroupId = groupId }))
+            {
+                ViewBag.DeleteGroup = "There are students in this group. I can't delete this group.";
+            }
+            else
+            {
+                ViewBag.DeleteGroup = "There are no students in this group. I can delete this group.";
+            }
+            return View();
+        }
+
+        public IActionResult EditStudent(int studentId)
+        {
+            if (studentId != 0)
+            {
+                Student model = _studentsRepository.GetStudentById(studentId);
+                return View(model);
+            }
+            return RedirectToAction("Index");
+        }
+
+        public IActionResult SaveStudent(Student student)
+        {
+            _studentsRepository.SaveStudent(student);
+            return RedirectToAction("Index");
+        }
+
+        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        //public IActionResult Error()
+        //{
+        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        //}
+
+        public FullListViewModel CreateModel(int course, int group, int student)
         {
             FullListViewModel model = new();
 
@@ -97,60 +165,6 @@ namespace Faculty.Controllers
             _activeStudent = student;
 
             return model;
-        }
-        public IActionResult Index()
-        {
-            return View(_model);
-        }
-
-        [HttpPost]
-        public IActionResult DeleteGroup(int group)
-        {
-            if (!_groupsRepository.DeleteGroup(new Group() { GroupId = group }))
-            {
-                ViewBag.DeleteGroup = "The group has students. Can't delete.";
-            }
-            else
-            {
-                ViewBag.DeleteGroup = "The group hasn't students. Can delete.";
-            }
-            return View();
-        }
-
-        [HttpPost]
-        public IActionResult ChooseCourse(int course)
-        {
-            _model = Create(course, _activeGroup, _activeStudent);
-            return View(_model);
-        }
-
-        public IActionResult ChooseGroup(int group)
-        {
-            _model = Create(_activeCourse, group, _activeStudent);
-            return View(_model);
-        }
-
-        public IActionResult EditGroup(int group)
-        {
-            Group model = _groupsRepository.GetGroupById(group);
-            return View(model);
-        }
-
-        public IActionResult SaveGroup(Group model)
-        {
-            _groupsRepository.SaveGroup(model);
-             return RedirectToAction("Index");
-        }
-
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
 }

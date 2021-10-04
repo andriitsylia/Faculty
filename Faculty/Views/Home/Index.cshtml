@@ -8,8 +8,8 @@
 
 <div class="form-group">
     <form method="post" class="form-inline" role="form">
-        <label for="course" class="col-md-2 control-label">Course:</label>
-        <select name="course" id="course" class="col-md-3 form-control">
+        <label for="courseId" class="col-md-2 control-label">Course:</label>
+        <select name="courseId" id="courseId" class="col-md-3 form-control">
             <option value="0" selected>All</option>
             @foreach (var course in Model.Courses)
             {
@@ -21,8 +21,8 @@
 </div>
 <div class="form-group">
     <form method="post" class="form-inline" >
-        <label for="group" class="col-md-2 control-label">Group:</label>
-        <select name="group" id="group" class="col-md-3 form-control">
+        <label for="groupId" class="col-md-2 control-label">Group:</label>
+        <select name="groupId" id="groupId" class="col-md-3 form-control">
             <option value="0" selected>All</option>
             @foreach (var group in Model.Groups)
             {
@@ -30,21 +30,21 @@
             }
         </select>
         <input type="submit" name="submit" asp-controller="Home" asp-action="ChooseGroup" value="Students">
-        <input type="submit" name="edit" asp-controller="Home" asp-action="EditGroup" asp-route-id="group" value="Edit">
-        <input type="submit" name="delete" asp-controller="Home" asp-action="DeleteGroup" value="Delete">
+        <input type="submit" name="edit" asp-controller="Home" asp-action="EditGroup" asp-route-id="groupId" value="Edit">
+        <input type="submit" name="delete" asp-controller="Home" asp-action="DeleteGroup" asp-route-id="groupId" value="Delete">
     </form>
 </div>
 <div class="form-group">
     <form method="post" class="form-inline">
-        <label for="student" class="col-md-2 control-label">Student:</label>
-        <select name="student" id="student" class="col-md-3 form-control">
+        <label for="studentId" class="col-md-2 control-label">Student:</label>
+        <select name="studentId" id="studentId" class="col-md-3 form-control">
             <option value="0" selected>All</option>
             @foreach (var student in Model.Students)
             {
                 <option value="@student.StudentId">@(student.FirstName + " " + student.LastName)</option>
             }
         </select>
-        <input type="submit" asp-controller="Home" asp-action="EditStudent" value="Edit">
+        <input type="submit" name="edit" asp-controller="Home" asp-action="EditStudent" asp-route-id="studentId" value="Edit">
     </form>
 </div>
 
