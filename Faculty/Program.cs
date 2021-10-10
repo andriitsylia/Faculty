@@ -1,4 +1,4 @@
-using Faculty.Configurations;
+using WEB.Configurations;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Faculty
+namespace WEB
 {
     public class Program
     {

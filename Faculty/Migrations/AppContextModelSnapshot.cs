@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace Faculty.Migrations
+namespace DAL.Migrations
 {
     [DbContext(typeof(AppContext))]
     partial class AppContextModelSnapshot : ModelSnapshot

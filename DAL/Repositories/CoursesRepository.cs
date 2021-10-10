@@ -1,10 +1,11 @@
-﻿using Faculty.Models;
+﻿using DAL.Entities;
+using DAL.EF;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Faculty.Repositories
+namespace DAL.Repositories
 {
     public class CoursesRepository
     {

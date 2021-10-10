@@ -1,13 +1,8 @@
-﻿using Faculty.Interfaces;
-using Faculty.Models;
+﻿using DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Faculty.Configurations
+namespace DAL.Configurations
 {
     public class StudentConfiguration : IEntityTypeConfiguration<Student>
     {

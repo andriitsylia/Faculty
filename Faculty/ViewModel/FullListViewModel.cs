@@ -1,10 +1,10 @@
-﻿using Faculty.Models;
+﻿using WEB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Faculty.ViewModel
+namespace WEB.ViewModel
 {
     public class FullListViewModel
     {
