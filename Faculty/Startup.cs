@@ -1,3 +1,4 @@
+using Faculty.Data;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
@@ -5,8 +6,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using Faculty.Services.Repositories;
 
-namespace WEB
+namespace Faculty
 {
     public class Startup
     {
@@ -22,7 +24,7 @@ namespace WEB
         {
             dbConnectionBuilder = new ConfigurationBuilder().AddJsonFile("dbsettings.json").Build();
             string dbConnection = dbConnectionBuilder.GetConnectionString("DefaultConnection");
-            services.AddDbContext<AppContext>(options => options.UseSqlServer(dbConnection));
+            services.AddDbContext<Data.AppContext>(options => options.UseSqlServer(dbConnection));
 
             services.AddTransient<CoursesRepository>();
             services.AddTransient<GroupsRepository>();

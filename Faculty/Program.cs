@@ -1,4 +1,4 @@
-using WEB.Configurations;
+using Faculty.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WEB
+namespace Faculty
 {
     public class Program
     {
@@ -19,9 +19,9 @@ namespace WEB
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder =>
+                .ConfigureWebHostDefaults(FacultyBuilder =>
                 {
-                    webBuilder.UseStartup<Startup>();
+                    FacultyBuilder.UseStartup<Startup>();
                 });
     }
 }

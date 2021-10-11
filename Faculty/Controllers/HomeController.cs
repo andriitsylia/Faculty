@@ -1,6 +1,6 @@
-﻿using WEB.Interfaces;
-using WEB.Models;
-using WEB.Configurations;
+﻿using Faculty.Services.Interfaces;
+using Faculty.Models;
+using Faculty.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -8,10 +8,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using WEB.Repositories;
-using WEB.ViewModel;
+using Faculty.Data.Entities;
+using Faculty.Services.Repositories;
 
-namespace WEB.Controllers
+namespace Faculty.Controllers
 {
     public class HomeController : Controller
     {
