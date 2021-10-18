@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DAL.Entities
+namespace Faculty.DAL.Entities
 {
     [Table("Course")]
     public class Course

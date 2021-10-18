@@ -1,14 +1,14 @@
-﻿using WEB.Interfaces;
-using WEB.Models;
-using WEB.Repositories;
-using WEB.ViewModel;
+﻿using Faculty.WEB.Interfaces;
+using Faculty.WEB.Models;
+using Faculty.WEB.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Faculty.DAL.Repositories;
 
-namespace WEB.Controllers
+namespace Faculty.WEB.Controllers
 {
     public class StudentsController : Controller
     {
@@ -21,7 +21,7 @@ namespace WEB.Controllers
 
         public IActionResult Index()
         {
-            return View(_studentsRepository.GetStudents());
+            return View(_studentsRepository.GetAll());
         }
     }
 }

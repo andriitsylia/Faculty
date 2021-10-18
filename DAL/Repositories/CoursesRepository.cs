@@ -1,13 +1,12 @@
-﻿using DAL.Entities;
-using DAL.EF;
-using System;
+﻿using Faculty.DAL.Entities;
+using Faculty.DAL.Interfaces;
+using Faculty.DAL.EF;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
-namespace DAL.Repositories
+namespace Faculty.DAL.Repositories
 {
-    public class CoursesRepository
+    public class CoursesRepository : ICoursesRepository
     {
         private readonly AppContext _appContext;
 
@@ -16,14 +15,24 @@ namespace DAL.Repositories
             _appContext = appContext;
         }
 
-        public IQueryable<Course> GetCourses()
+        public IEnumerable<Course> GetAll()
         {
             return _appContext.Courses;
         }
 
-        public Course GetCourseById(int courseId)
+        public Course GetById(int id)
         {
-            return _appContext.Courses.Single(c => c.CourseId == courseId);
+            return _appContext.Courses.Single(c => c.CourseId == id);
+        }
+
+        public void Save(Course entity)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public bool Delete(Course entity)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

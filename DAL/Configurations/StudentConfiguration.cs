@@ -1,8 +1,8 @@
-﻿using DAL.Entities;
+﻿using Faculty.DAL.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace DAL.Configurations
+namespace Faculty.DAL.Configurations
 {
     public class StudentConfiguration : IEntityTypeConfiguration<Student>
     {

@@ -2,12 +2,12 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
-using DAL.EF;
+using Faculty.DAL.EF;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DAL.Configurations
+namespace Faculty.DAL.Configurations
 {
     public static class MigrationManager
     {
@@ -15,7 +15,7 @@ namespace DAL.Configurations
         {
             using (var scope = host.Services.CreateScope())
             {
-                using (var appContext = scope.ServiceProvider.GetRequiredService<AppContext>())
+                using (var appContext = scope.ServiceProvider.GetRequiredService<EF.AppContext>())
                 {
                     try
                     {

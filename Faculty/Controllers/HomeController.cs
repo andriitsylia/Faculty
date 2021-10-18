@@ -1,35 +1,30 @@
-﻿using WEB.Interfaces;
-using WEB.Models;
-using WEB.Configurations;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using System;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using WEB.Repositories;
-using WEB.ViewModel;
+using Faculty.WEB.ViewModel;
+using Faculty.DAL.Repositories;
+using Faculty.DAL.Entities;
+using Faculty.BLL.Services;
+using Faculty.BLL.Interface;
 
-namespace WEB.Controllers
+namespace Faculty.WEB.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly CoursesRepository _coursesRepository;
-        private readonly GroupsRepository _groupsRepository;
-        private readonly StudentsRepository _studentsRepository;
+        private readonly ICoursesServices _coursesServices;
+        private readonly IGroupsServices _groupsServices;
+        private readonly IStudentsServices _studentsServices;
 
         private int _activeCourse = 0;
         private int _activeGroup = 0;
         private int _activeStudent = 0;
         private FullListViewModel _model;
-        public HomeController(CoursesRepository coursesRepository, 
-                              GroupsRepository groupsRepository,
-                              StudentsRepository studentsRepository)
+        public HomeController(ICoursesServices coursesService,
+                              IGroupsServices groupsServices,
+                              IStudentsServices studentsServices)
         {
-            _coursesRepository = coursesRepository;
-            _groupsRepository = groupsRepository;
-            _studentsRepository = studentsRepository;
+            _coursesServices = coursesService;
+            _groupsServices = groupsServices;
+            _studentsServices = studentsServices;
             _model = CreateModel(_activeCourse, _activeGroup, _activeStudent);
         }
 
@@ -54,7 +49,7 @@ namespace WEB.Controllers
         {
             if (groupId != 0)
             {
-                Group model = _groupsRepository.GetGroupById(groupId);
+                Group model = _groupsServices.GetById(groupId);
                 return View(model);
             }
             return RedirectToAction("Index");
@@ -62,13 +57,13 @@ namespace WEB.Controllers
 
         public IActionResult SaveGroup(Group model)
         {
-            _groupsRepository.SaveGroup(model);
+            _groupsServices.Save(model);
              return RedirectToAction("Index");
         }
 
         public IActionResult DeleteGroup(int groupId)
         {
-            if (!_groupsRepository.DeleteGroup(new Group() { GroupId = groupId }))
+            if (!_groupsServices.Delete(new Group() { GroupId = groupId }))
             {
                 ViewBag.DeleteGroup = "There are students in this group. I can't delete this group.";
             }
@@ -83,7 +78,7 @@ namespace WEB.Controllers
         {
             if (studentId != 0)
             {
-                Student model = _studentsRepository.GetStudentById(studentId);
+                Student model = _studentsServices.GetById(studentId);
                 return View(model);
             }
             return RedirectToAction("Index");
@@ -91,7 +86,7 @@ namespace WEB.Controllers
 
         public IActionResult SaveStudent(Student student)
         {
-            _studentsRepository.SaveStudent(student);
+            _studentsServices.Save(student);
             return RedirectToAction("Index");
         }
 
@@ -107,33 +102,33 @@ namespace WEB.Controllers
 
             if (course != 0)
             {
-                model.Courses = new List<Course> { _coursesRepository.GetCourseById(course) };
+                model.Courses = new List<Course> { _coursesServices.GetById(course) };
             }
             else
             {
-                model.Courses = _coursesRepository.GetCourses();
+                model.Courses = _coursesServices.GetAll();
             }
 
             if (group != 0)
             {
                 if (course != 0)
                 {
-                    model.Groups = _groupsRepository.GetGroupsByCourseId(course);
+                    model.Groups = _groupsServices.GetByCourseId(course);
                 }
                 else
                 {
-                    model.Groups = new List<Group> { _groupsRepository.GetGroupById(group) };
+                    model.Groups = new List<Group> { _groupsServices.GetById(group) };
                 }
             }
             else
             {
                 if (course != 0)
                 {
-                    model.Groups = _groupsRepository.GetGroupsByCourseId(course);
+                    model.Groups = _groupsServices.GetByCourseId(course);
                 }
                 else
                 {
-                    model.Groups = _groupsRepository.GetGroups();
+                    model.Groups = _groupsServices.GetAll();
                 }
             }
 
@@ -141,22 +136,22 @@ namespace WEB.Controllers
             {
                 if (group != 0)
                 {
-                    model.Students = _studentsRepository.GetStudentsByGroupId(group);
+                    model.Students = _studentsServices.GetByGroupId(group);
                 }
                 else
                 {
-                    model.Students = new List<Student> { _studentsRepository.GetStudentById(student) };
+                    model.Students = new List<Student> { _studentsServices.GetById(student) };
                 }
             }
             else
             {
                 if (group != 0)
                 {
-                    model.Students = _studentsRepository.GetStudentsByGroupId(group);
+                    model.Students = _studentsServices.GetByGroupId(group);
                 }
                 else
                 {
-                    model.Students = _studentsRepository.GetStudents();
+                    model.Students = _studentsServices.GetAll();
                 }
             }
 

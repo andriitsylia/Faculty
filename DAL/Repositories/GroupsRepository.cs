@@ -1,14 +1,14 @@
-﻿using DAL.Entities;
-using DAL.EF;
+﻿using Faculty.DAL.Entities;
+using Faculty.DAL.EF;
+using Faculty.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DAL.Repositories
+namespace Faculty.DAL.Repositories
 {
-    public class GroupsRepository
+    public class GroupsRepository : IGroupsRepository
     {
         private readonly AppContext _appContext;
 
@@ -17,31 +17,31 @@ namespace DAL.Repositories
             _appContext = appContext;
         }
 
-        public IQueryable<Group> GetGroups()
+        public IEnumerable<Group> GetAll()
         {
             return _appContext.Groups;
         }
 
-        public IQueryable<Group> GetGroupsByCourseId(int courseId)
+        public Group GetById(int id)
         {
-            return _appContext.Groups.Where(g => g.CourseId == courseId);
+            return _appContext.Groups.Single(g => g.GroupId == id);
         }
 
-        public Group GetGroupById(int groupId)
+        public IEnumerable<Group> GetByCourseId(int id)
         {
-            return _appContext.Groups.Single(g => g.GroupId == groupId);
+            return _appContext.Groups.Where(g => g.CourseId == id);
         }
 
-        public void SaveGroup(Group group)
+        public void Save(Group entity)
         {
-           _appContext.Entry(group).State = EntityState.Modified;
+            _appContext.Entry(entity).State = EntityState.Modified;
             _appContext.SaveChanges();
         }
 
-        public bool DeleteGroup(Group group)
+        public bool Delete(Group entity)
         {
             if (!_appContext.Groups
-                .Where(g => g.GroupId == group.GroupId)
+                .Where(g => g.GroupId == entity.GroupId)
                 .Include(s => s.Students)
                 .Any())
             {

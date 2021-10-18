@@ -4,9 +4,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System;
+using Faculty.DAL.Repositories;
+using Faculty.DAL.EF;
+using Faculty.DAL.Interfaces;
+using Faculty.BLL.Interface;
+using Faculty.DAL.Entities;
+using Faculty.BLL.Services;
 
-namespace WEB
+namespace Faculty.WEB
 {
     public class Startup
     {
@@ -24,9 +29,12 @@ namespace WEB
             string dbConnection = dbConnectionBuilder.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppContext>(options => options.UseSqlServer(dbConnection));
 
-            services.AddTransient<CoursesRepository>();
-            services.AddTransient<GroupsRepository>();
-            services.AddTransient<StudentsRepository>();
+            services.AddTransient<ICoursesRepository, CoursesRepository>();
+            services.AddTransient<IGroupsRepository, GroupsRepository>();
+            services.AddTransient<IStudentsRepository, StudentsRepository>();
+            services.AddTransient<ICoursesServices, CoursesServices>();
+            services.AddTransient<IGroupsServices, GroupsServices>();
+            services.AddTransient<IStudentsServices, StudentsServices>();
 
             services.AddControllersWithViews();
         }

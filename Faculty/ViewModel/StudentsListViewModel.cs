@@ -1,10 +1,10 @@
-﻿using WEB.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Faculty.DAL.Entities;
 
-namespace WEB.ViewModel
+namespace Faculty.WEB.ViewModel
 {
     public class StudentsListViewModel
     {

@@ -1,8 +1,8 @@
-﻿using DAL.Configurations;
+﻿using Faculty.DAL.Configurations;
 using Microsoft.EntityFrameworkCore;
-using DAL.Entities;
+using Faculty.DAL.Entities;
 
-namespace DAL.EF
+namespace Faculty.DAL.EF
 {
     public class AppContext : DbContext
     {

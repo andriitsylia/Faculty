@@ -1,13 +1,13 @@
-﻿using WEB.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Faculty.DAL.Entities;
 
-namespace WEB.Interfaces
+namespace Faculty.WEB.Interfaces
 {
     public interface IGroups
     {
-        public IEnumerable<Group> Groups { get; }
+        public IEnumerable<Student> Groups { get; }
     }
 }

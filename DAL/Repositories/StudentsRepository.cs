@@ -1,14 +1,14 @@
-﻿using DAL.Entities;
-using DAL.EF;
+﻿using Faculty.DAL.Entities;
+using Faculty.DAL.EF;
+using Faculty.DAL.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DAL.Repositories
+namespace Faculty.DAL.Repositories
 {
-    public class StudentsRepository
+    public class StudentsRepository :IStudentsRepository
     {
         private readonly AppContext _appContext;
 
@@ -17,31 +17,32 @@ namespace DAL.Repositories
             _appContext = appContext;
         }
 
-        public IQueryable<Student> GetStudents()
+        public IEnumerable<Student> GetAll()
         {
             return _appContext.Students;
         }
 
-        public IQueryable<Student> GetStudentsByGroupId(int groupId)
+        public Student GetById(int id)
         {
-            return _appContext.Students.Where(s => s.GroupId == groupId);
+            return _appContext.Students.Single(s => s.StudentId == id);
         }
 
-        public Student GetStudentById(int studentId)
+        public IEnumerable<Student> GetByGroupId(int id)
         {
-            return _appContext.Students.Single(s => s.StudentId == studentId);
+            return _appContext.Students.Where(s => s.GroupId == id);
         }
 
-        public void SaveStudent(Student student)
+        public void Save(Student entity)
         {
-            _appContext.Entry(student).State = EntityState.Modified;
+            _appContext.Entry(entity).State = EntityState.Modified;
             _appContext.SaveChanges();
         }
 
-        public void DeleteStudent(Student student)
+        public bool Delete(Student entity)
         {
-            _appContext.Students.Remove(student);
+            _appContext.Students.Remove(entity);
             _appContext.SaveChanges();
+            return true;
         }
     }
 }
