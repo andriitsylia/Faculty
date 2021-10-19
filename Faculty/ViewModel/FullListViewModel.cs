@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Faculty.BLL.DTO;
 using Faculty.DAL.Entities;
 
 namespace Faculty.WEB.ViewModel
 {
     public class FullListViewModel
     {
-        public IEnumerable<Course> Courses { get; set; }
-        public IEnumerable<Group> Groups { get; set; }
-        public IEnumerable<Student> Students { get; set; }
+        public IEnumerable<CourseDTO> Courses { get; set; }
+        public IEnumerable<GroupDTO> Groups { get; set; }
+        public IEnumerable<StudentDTO> Students { get; set; }
 
     }
 }

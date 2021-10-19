@@ -5,6 +5,7 @@ using Faculty.DAL.Repositories;
 using Faculty.DAL.Entities;
 using Faculty.BLL.Services;
 using Faculty.BLL.Interface;
+using Faculty.BLL.DTO;
 
 namespace Faculty.WEB.Controllers
 {
@@ -49,13 +50,13 @@ namespace Faculty.WEB.Controllers
         {
             if (groupId != 0)
             {
-                Group model = _groupsServices.GetById(groupId);
+                GroupDTO model = _groupsServices.GetById(groupId);
                 return View(model);
             }
             return RedirectToAction("Index");
         }
 
-        public IActionResult SaveGroup(Group model)
+        public IActionResult SaveGroup(GroupDTO model)
         {
             _groupsServices.Save(model);
              return RedirectToAction("Index");
@@ -63,7 +64,7 @@ namespace Faculty.WEB.Controllers
 
         public IActionResult DeleteGroup(int groupId)
         {
-            if (!_groupsServices.Delete(new Group() { GroupId = groupId }))
+            if (!_groupsServices.Delete(new GroupDTO() { GroupId = groupId }))
             {
                 ViewBag.DeleteGroup = "There are students in this group. I can't delete this group.";
             }
@@ -78,13 +79,13 @@ namespace Faculty.WEB.Controllers
         {
             if (studentId != 0)
             {
-                Student model = _studentsServices.GetById(studentId);
+                StudentDTO model = _studentsServices.GetById(studentId);
                 return View(model);
             }
             return RedirectToAction("Index");
         }
 
-        public IActionResult SaveStudent(Student student)
+        public IActionResult SaveStudent(StudentDTO student)
         {
             _studentsServices.Save(student);
             return RedirectToAction("Index");
@@ -102,7 +103,7 @@ namespace Faculty.WEB.Controllers
 
             if (course != 0)
             {
-                model.Courses = new List<Course> { _coursesServices.GetById(course) };
+                model.Courses = new List<CourseDTO> { _coursesServices.GetById(course) };
             }
             else
             {
@@ -117,7 +118,7 @@ namespace Faculty.WEB.Controllers
                 }
                 else
                 {
-                    model.Groups = new List<Group> { _groupsServices.GetById(group) };
+                    model.Groups = new List<GroupDTO> { _groupsServices.GetById(group) };
                 }
             }
             else
@@ -140,7 +141,7 @@ namespace Faculty.WEB.Controllers
                 }
                 else
                 {
-                    model.Students = new List<Student> { _studentsServices.GetById(student) };
+                    model.Students = new List<StudentDTO> { _studentsServices.GetById(student) };
                 }
             }
             else

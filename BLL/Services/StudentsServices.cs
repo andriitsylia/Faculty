@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Faculty.BLL.DTO;
 
 namespace Faculty.BLL.Services
 {
@@ -19,29 +20,65 @@ namespace Faculty.BLL.Services
             _studentsRepository = studentsRepository;
         }
 
-        public IEnumerable<Student> GetAll()
+        public IEnumerable<StudentDTO> GetAll()
         {
-            return _studentsRepository.GetAll();
+            List<StudentDTO> students = new();
+            foreach (var student in _studentsRepository.GetAll())
+            {
+                StudentDTO item = new();
+                item.StudentId = student.StudentId;
+                item.FirstName = student.FirstName;
+                item.LastName = student.LastName;
+                item.GroupId = student.GroupId;
+                students.Add(item);
+            }
+            return students;
         }
 
-        public Student GetById(int studentId)
+        public StudentDTO GetById(int studentId)
         {
-            return _studentsRepository.GetById(studentId);
+            StudentDTO item = new();
+            Student student = _studentsRepository.GetById(studentId);
+            item.StudentId = student.StudentId;
+            item.FirstName = student.FirstName;
+            item.LastName = student.LastName;
+            item.GroupId = student.GroupId;
+            return item;
         }
 
-        public IEnumerable<Student> GetByGroupId(int groupId)
+        public IEnumerable<StudentDTO> GetByGroupId(int groupId)
         {
-            return _studentsRepository.GetByGroupId(groupId);
+            List<StudentDTO> students = new();
+            foreach (var student in _studentsRepository.GetByGroupId(groupId))
+            {
+                StudentDTO item = new();
+                item.StudentId = student.StudentId;
+                item.FirstName = student.FirstName;
+                item.LastName = student.LastName;
+                item.GroupId = student.GroupId;
+                students.Add(item);
+            }
+            return students;
         }
 
-        public void Save(Student entity)
+        public void Save(StudentDTO entity)
         {
-            _studentsRepository.Save(entity);
+            Student student = new();
+            student.StudentId = entity.StudentId;
+            student.FirstName = entity.FirstName;
+            student.LastName = entity.LastName;
+            student.GroupId = entity.GroupId;
+            _studentsRepository.Save(student);
         }
 
-        public bool Delete(Student entity)
+        public bool Delete(StudentDTO entity)
         {
-            return _studentsRepository.Delete(entity);
+            Student student = new();
+            student.StudentId = entity.StudentId;
+            student.FirstName = entity.FirstName;
+            student.LastName = entity.LastName;
+            student.GroupId = entity.GroupId;
+            return _studentsRepository.Delete(student);
         }
     }
 }

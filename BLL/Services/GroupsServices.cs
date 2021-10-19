@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Faculty.BLL.DTO;
 
 namespace Faculty.BLL.Services
 {
@@ -19,29 +20,60 @@ namespace Faculty.BLL.Services
             _groupsRepository = groupsRepository;
         }
 
-        public IEnumerable<Group> GetAll()
+        public IEnumerable<GroupDTO> GetAll()
         {
-            return _groupsRepository.GetAll();
+            List<GroupDTO> groups = new();
+            foreach (var group in _groupsRepository.GetAll())
+            {
+                GroupDTO item = new();
+                item.GroupId = group.GroupId;
+                item.Name = group.Name;
+                item.CourseId = group.CourseId;
+                groups.Add(item);
+            }
+            return groups;
         }
 
-        public Group GetById(int groupId)
+        public GroupDTO GetById(int groupId)
         {
-            return _groupsRepository.GetById(groupId);
+            GroupDTO item = new();
+            Group group = _groupsRepository.GetById(groupId);
+            item.GroupId = group.GroupId;
+            item.Name = group.Name;
+            item.CourseId = group.CourseId;
+            return item;
         }
 
-        public IEnumerable<Group> GetByCourseId(int courseId)
+        public IEnumerable<GroupDTO> GetByCourseId(int courseId)
         {
-            return _groupsRepository.GetByCourseId(courseId);
+            List<GroupDTO> groups = new();
+            foreach (var group in _groupsRepository.GetByCourseId(courseId))
+            {
+                GroupDTO item = new();
+                item.GroupId = group.GroupId;
+                item.Name = group.Name;
+                item.CourseId = group.CourseId;
+                groups.Add(item);
+            }
+            return groups;
         }
 
-        public void Save(Group entity)
+        public void Save(GroupDTO entity)
         {
-            _groupsRepository.Save(entity);
+            Group group = new();
+            group.GroupId = entity.GroupId;
+            group.Name = entity.Name;
+            group.CourseId = entity.CourseId;
+            _groupsRepository.Save(group);
         }
 
-        public bool Delete(Group entity)
+        public bool Delete(GroupDTO entity)
         {
-            return _groupsRepository.Delete(entity);
+            Group group = new();
+            group.GroupId = entity.GroupId;
+            group.Name = entity.Name;
+            group.CourseId = entity.CourseId;
+            return _groupsRepository.Delete(group);
         }
     }
 }

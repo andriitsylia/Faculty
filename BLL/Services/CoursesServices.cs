@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Faculty.BLL.DTO;
 
 namespace Faculty.BLL.Services
 {
@@ -19,14 +20,28 @@ namespace Faculty.BLL.Services
             _coursesRepository = coursesRepository;
         }
 
-        public IEnumerable<Course> GetAll()
+        public IEnumerable<CourseDTO> GetAll()
         {
-            return _coursesRepository.GetAll();
+            List<CourseDTO> courses = new();
+            foreach (var course in _coursesRepository.GetAll())
+            {
+                CourseDTO item = new();
+                item.CourseId = course.CourseId;
+                item.Name = course.Name;
+                item.Description = course.Description;
+                courses.Add(item);
+            }
+            return courses;
         }
 
-        public Course GetById(int courseId)
+        public CourseDTO GetById(int courseId)
         {
-            return _coursesRepository.GetById(courseId);
+            CourseDTO item = new();
+            Course course = _coursesRepository.GetById(courseId);
+            item.CourseId = course.CourseId;
+            item.Name = course.Name;
+            item.Description = course.Description;
+            return item;
         }
     }
 }

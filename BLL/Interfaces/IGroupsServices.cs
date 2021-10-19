@@ -1,14 +1,15 @@
-﻿using Faculty.DAL.Entities;
+﻿using Faculty.BLL.DTO;
+using Faculty.DAL.Entities;
 using System.Collections.Generic;
 
 namespace Faculty.BLL.Interface
 {
     public interface IGroupsServices
     {
-        public IEnumerable<Group> GetAll();
-        public Group GetById(int groupId); 
-        public IEnumerable<Group> GetByCourseId(int courseId);
-        public void Save(Group entity);
-        public bool Delete(Group entity);
+        public IEnumerable<GroupDTO> GetAll();
+        public GroupDTO GetById(int groupId); 
+        public IEnumerable<GroupDTO> GetByCourseId(int courseId);
+        public void Save(GroupDTO entity);
+        public bool Delete(GroupDTO entity);
     }
 }

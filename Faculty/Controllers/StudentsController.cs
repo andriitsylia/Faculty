@@ -7,21 +7,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Faculty.DAL.Repositories;
+using Faculty.BLL.Interface;
 
 namespace Faculty.WEB.Controllers
 {
     public class StudentsController : Controller
     {
-        private readonly StudentsRepository _studentsRepository;
+        private readonly IStudentsServices _studentsServices;
 
-        public StudentsController(StudentsRepository studentsRepository)
+        public StudentsController(IStudentsServices studentsServices)
         {
-            _studentsRepository = studentsRepository;
+            _studentsServices = studentsServices;
         }
 
         public IActionResult Index()
         {
-            return View(_studentsRepository.GetAll());
+            return View(_studentsServices.GetAll());
         }
     }
 }

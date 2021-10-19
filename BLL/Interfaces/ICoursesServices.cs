@@ -1,11 +1,12 @@
-﻿using Faculty.DAL.Entities;
+﻿using Faculty.BLL.DTO;
+using Faculty.DAL.Entities;
 using System.Collections.Generic;
 
 namespace Faculty.BLL.Interface
 {
     public interface ICoursesServices
     {
-        public IEnumerable<Course> GetAll();
-        public Course GetById(int courseId);
+        public IEnumerable<CourseDTO> GetAll();
+        public CourseDTO GetById(int courseId);
     }
 }

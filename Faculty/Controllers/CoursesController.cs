@@ -6,21 +6,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Faculty.DAL.Repositories;
+using Faculty.BLL.Interface;
 
 namespace Faculty.WEB.Controllers
 {
     public class CoursesController: Controller
     {
-        private readonly CoursesRepository _coursesRepository;
+        private readonly ICoursesServices _coursesServices;
 
-        public CoursesController(CoursesRepository coursesRepository)
+        public CoursesController(ICoursesServices coursesServices)
         {
-            _coursesRepository = coursesRepository;
+            _coursesServices = coursesServices;
         }
 
         public IActionResult Index()
         {
-            return View(_coursesRepository.GetAll());
+            return View(_coursesServices.GetAll());
         }
     }
 }
