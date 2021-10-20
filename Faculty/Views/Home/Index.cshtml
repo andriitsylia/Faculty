@@ -16,7 +16,7 @@
                 <option value="@course.CourseId">@course.Name</option>
             }
         </select>
-        <input type="submit" asp-controller="Home" asp-action="ChooseCourse" value="Groups">
+        <input type="submit" asp-controller="Courses" asp-action="ChooseCourse" value="Groups">
     </form>
 </div>
 <div class="form-group">
@@ -29,9 +29,9 @@
                 <option value="@group.GroupId">@group.Name</option>
             }
         </select>
-        <input type="submit" name="submit" asp-controller="Home" asp-action="ChooseGroup" value="Students">
-        <input type="submit" name="edit" asp-controller="Home" asp-action="EditGroup" asp-route-id="groupId" value="Edit">
-        <input type="submit" name="delete" asp-controller="Home" asp-action="DeleteGroup" asp-route-id="groupId" value="Delete">
+        <input type="submit" name="submit" asp-controller="Groups" asp-action="ChooseGroup" value="Students">
+        <input type="submit" name="edit" asp-controller="Groups" asp-action="EditGroup" asp-route-id="groupId" value="Edit">
+        <input type="submit" name="delete" asp-controller="Groups" asp-action="DeleteGroup" asp-route-id="groupId" value="Delete">
     </form>
 </div>
 <div class="form-group">
@@ -44,7 +44,7 @@
                 <option value="@student.StudentId">@(student.FirstName + " " + student.LastName)</option>
             }
         </select>
-        <input type="submit" name="edit" asp-controller="Home" asp-action="EditStudent" asp-route-id="studentId" value="Edit">
+        <input type="submit" name="edit" asp-controller="Students" asp-action="EditStudent" asp-route-id="studentId" value="Edit">
     </form>
 </div>
 

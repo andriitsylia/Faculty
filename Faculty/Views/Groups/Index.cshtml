@@ -1,5 +1,5 @@
-﻿@using Faculty.BLL.DTO
-@model IEnumerable<GroupDTO>
+﻿@using Faculty.WEB.ViewModel
+@model FullListViewModel
 @{
     ViewData["Title"] = "GroupsList";
 }
@@ -14,7 +14,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var group in Model)
+        @foreach (var group in Model.Groups)
         {
         <tr>
             <td>@group.GroupId</td>

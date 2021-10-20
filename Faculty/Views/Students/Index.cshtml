@@ -1,5 +1,5 @@
-﻿@using Faculty.BLL.DTO
-@model IEnumerable<StudentDTO>
+﻿@using Faculty.WEB.ViewModel
+@model FullListViewModel
 @{
     ViewData["Title"] = "StudentsList";
 }
@@ -15,7 +15,7 @@
         </tr>
     </thead>
     <tbody>
-        @foreach (var student in Model)
+        @foreach (var student in Model.Students)
         {
         <tr>
             <td>@student.StudentId</td>

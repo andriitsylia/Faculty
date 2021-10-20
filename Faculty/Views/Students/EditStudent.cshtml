@@ -1,0 +1,24 @@
+﻿@using Faculty.WEB.ViewModel
+@model FullListViewModel
+@{
+    ViewData["Title"] = "Edit student's profile";
+}
+
+<h1>@ViewData["Title"] - @Model.Students.ElementAt(0).FirstName @Model.Students.ElementAt(0).LastName</h1>
+
+
+<div class="form-group">
+    <form method="post" class="form-horizontal" role="form" asp-controller="Students" asp-action="SaveStudent">
+        <input type="hidden" asp-for="@Model.Students.ElementAt(0).StudentId" />
+        <div asp-validation-summary="All"></div>
+        <div class="form-group">
+            <label class="col-md-2 control-label" asp-for="@Model.Students.ElementAt(0).FirstName"></label><br>
+            <input class="col-md-3 form-control" asp-for="@Model.Students.ElementAt(0).FirstName" /><br>
+            <span asp-validation-for="@Model.Students.ElementAt(0).FirstName"></span>
+            <label class="col-md-2 control-label" asp-for="@Model.Students.ElementAt(0).LastName"></label><br>
+            <input class="col-md-2 form-control" asp-for="@Model.Students.ElementAt(0).LastName" /><br>
+            <span asp-validation-for="@Model.Students.ElementAt(0).LastName"></span>
+            <input type="submit" value="Save">
+        </div>
+</form>
+</div>

@@ -1,19 +1,17 @@
-﻿using Faculty.WEB.Interfaces;
-using Faculty.WEB.Models;
-using Faculty.WEB.ViewModel;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Faculty.DAL.Repositories;
+﻿using Microsoft.AspNetCore.Mvc;
 using Faculty.BLL.Interface;
+using Faculty.WEB.ViewModel;
+using Faculty.BLL.DTO;
+using System.Collections.Generic;
 
 namespace Faculty.WEB.Controllers
 {
     public class StudentsController : Controller
     {
+        private const int AllStudents = 0;
+
         private readonly IStudentsServices _studentsServices;
+         
 
         public StudentsController(IStudentsServices studentsServices)
         {
@@ -22,7 +20,41 @@ namespace Faculty.WEB.Controllers
 
         public IActionResult Index()
         {
-            return View(_studentsServices.GetAll());
+            var model = CreateModel(AllStudents);
+
+            return View(model);
+        }
+
+        public IActionResult EditStudent(int studentId)
+        {
+            if (studentId != 0)
+            {
+                var model = CreateModel(studentId);
+                return View(model);
+            }
+            return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult SaveStudent(StudentDTO student)
+        {
+            _studentsServices.Save(student);
+            return RedirectToAction("Index", "Home");
+        }
+
+        public FullListViewModel CreateModel(int studentId)
+        {
+            FullListViewModel model = new();
+
+            if (studentId != 0)
+            {
+                model.Students = new List<StudentDTO> { _studentsServices.GetById(studentId) };
+            }
+            else
+            {
+                model.Students = _studentsServices.GetAll();
+            }
+
+            return model;
         }
     }
 }
