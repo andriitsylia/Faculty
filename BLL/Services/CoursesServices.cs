@@ -1,22 +1,18 @@
 ﻿using Faculty.DAL.Entities;
 using Faculty.DAL.Interfaces;
-using Faculty.BLL.Interface;
-using Faculty.DAL.Repositories;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Faculty.BLL.DTO;
 using AutoMapper;
+using Faculty.BLL.Interfaces;
 
 namespace Faculty.BLL.Services
 {
-    public class CoursesServices : ICoursesServices
+    public class CoursesServices : IFacultyServices<CourseDTO>
     {
-        private readonly ICoursesRepository _coursesRepository;
+        private readonly IFacultyRepository<Course> _coursesRepository;
 
-        public CoursesServices(ICoursesRepository coursesRepository)
+        public CoursesServices(IFacultyRepository<Course> coursesRepository)
         {
             _coursesRepository = coursesRepository;
         }
@@ -25,19 +21,8 @@ namespace Faculty.BLL.Services
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Course, CourseDTO>());
             var mapper = new Mapper(config);
-            var coursesDTO = mapper.Map<List<CourseDTO>>(_coursesRepository.GetAll());
+            var coursesDTO = mapper.Map<List<CourseDTO>>(_coursesRepository.Get());
             return coursesDTO;
-
-            //List<CourseDTO> courses = new();
-            //foreach (var course in _coursesRepository.GetAll())
-            //{
-            //    CourseDTO item = new();
-            //    item.CourseId = course.CourseId;
-            //    item.Name = course.Name;
-            //    item.Description = course.Description;
-            //    courses.Add(item);
-            //}
-            //return courses;
         }
 
         public CourseDTO GetById(int courseId)
@@ -46,13 +31,21 @@ namespace Faculty.BLL.Services
             var mapper = new Mapper(config);
             var courseDTO = mapper.Map<CourseDTO>(_coursesRepository.GetById(courseId));
             return courseDTO;
+        }
 
-            //CourseDTO item = new();
-            //Course course = _coursesRepository.GetById(courseId);
-            //item.CourseId = course.CourseId;
-            //item.Name = course.Name;
-            //item.Description = course.Description;
-            //return item;
+        public void Save(CourseDTO entity)
+        {
+            throw new NotImplementedException();
+        }
+
+        IEnumerable<CourseDTO> IFacultyServices<CourseDTO>.GetByKeyId(int id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool Delete(CourseDTO entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

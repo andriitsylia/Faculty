@@ -1,6 +1,6 @@
 ﻿using Faculty.DAL.Entities;
 using Faculty.DAL.Interfaces;
-using Faculty.BLL.Interface;
+using Faculty.BLL.Interfaces;
 using Faculty.DAL.Repositories;
 using System;
 using System.Collections.Generic;
@@ -12,11 +12,11 @@ using AutoMapper;
 
 namespace Faculty.BLL.Services
 {
-    public class GroupsServices : IGroupsServices
+    public class GroupsServices : IFacultyServices<GroupDTO>
     {
-        private readonly IGroupsRepository _groupsRepository;
+        private readonly IFacultyRepository<Group> _groupsRepository;
 
-        public GroupsServices(IGroupsRepository groupsRepository)
+        public GroupsServices(IFacultyRepository<Group> groupsRepository)
         {
             _groupsRepository = groupsRepository;
         }
@@ -25,19 +25,8 @@ namespace Faculty.BLL.Services
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Group, GroupDTO>());
             var mapper = new Mapper(config);
-            var groupsDTO = mapper.Map<List<GroupDTO>>(_groupsRepository.GetAll());
+            var groupsDTO = mapper.Map<List<GroupDTO>>(_groupsRepository.Get());
             return groupsDTO;
-
-            //List<GroupDTO> groups = new();
-            //foreach (var group in _groupsRepository.GetAll())
-            //{
-            //    GroupDTO item = new();
-            //    item.GroupId = group.GroupId;
-            //    item.Name = group.Name;
-            //    item.CourseId = group.CourseId;
-            //    groups.Add(item);
-            //}
-            //return groups;
         }
 
         public GroupDTO GetById(int groupId)
@@ -46,32 +35,14 @@ namespace Faculty.BLL.Services
             var mapper = new Mapper(config);
             var groupDTO = mapper.Map<GroupDTO>(_groupsRepository.GetById(groupId));
             return groupDTO;
-
-            //GroupDTO item = new();
-            //Group group = _groupsRepository.GetById(groupId);
-            //item.GroupId = group.GroupId;
-            //item.Name = group.Name;
-            //item.CourseId = group.CourseId;
-            //return item;
         }
 
-        public IEnumerable<GroupDTO> GetByCourseId(int courseId)
+        public IEnumerable<GroupDTO> GetByKeyId(int id)
         {
             var config = new MapperConfiguration(cfg => cfg.CreateMap<Group, GroupDTO>());
             var mapper = new Mapper(config);
-            var groupsDTO = mapper.Map<List<GroupDTO>>(_groupsRepository.GetByCourseId(courseId));
+            var groupsDTO = mapper.Map<List<GroupDTO>>(_groupsRepository.Get(filter: c => c.CourseId == id));
             return groupsDTO;
-
-            //List<GroupDTO> groups = new();
-            //foreach (var group in _groupsRepository.GetByCourseId(courseId))
-            //{
-            //    GroupDTO item = new();
-            //    item.GroupId = group.GroupId;
-            //    item.Name = group.Name;
-            //    item.CourseId = group.CourseId;
-            //    groups.Add(item);
-            //}
-            //return groups;
         }
 
         public void Save(GroupDTO entity)
@@ -79,13 +50,7 @@ namespace Faculty.BLL.Services
             var config = new MapperConfiguration(cfg => cfg.CreateMap<GroupDTO, Group>());
             var mapper = new Mapper(config);
             var group = mapper.Map<Group>(entity);
-            _groupsRepository.Save(group);
-
-            //Group group = new();
-            //group.GroupId = entity.GroupId;
-            //group.Name = entity.Name;
-            //group.CourseId = entity.CourseId;
-            //_groupsRepository.Save(group);
+            _groupsRepository.Update(group);
         }
 
         public bool Delete(GroupDTO entity)
@@ -93,13 +58,8 @@ namespace Faculty.BLL.Services
             var config = new MapperConfiguration(cfg => cfg.CreateMap<GroupDTO, Group>());
             var mapper = new Mapper(config);
             var group = mapper.Map<Group>(entity);
-            return _groupsRepository.Delete(group);
-
-            //Group group = new();
-            //group.GroupId = entity.GroupId;
-            //group.Name = entity.Name;
-            //group.CourseId = entity.CourseId;
-            //return _groupsRepository.Delete(group);
+            _groupsRepository.Delete(group);
+            return true;
         }
     }
 }

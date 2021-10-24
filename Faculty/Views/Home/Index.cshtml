@@ -20,7 +20,7 @@
     </form>
 </div>
 <div class="form-group">
-    <form method="post" class="form-inline" >
+    <form method="post" class="form-inline">
         <label for="groupId" class="col-md-2 control-label">Group:</label>
         <select name="groupId" id="groupId" class="col-md-3 form-control">
             <option value="0" selected>All</option>
@@ -46,28 +46,4 @@
         </select>
         <input type="submit" name="edit" asp-controller="Students" asp-action="EditStudent" asp-route-id="studentId" value="Edit">
     </form>
-</div>
-
-<div class="row">
-    <div class="column col-md-3">
-        <h3>Courses</h3>
-        @foreach (var course in Model.Courses)
-        {
-            @course.Name<br>
-        }
-    </div>
-    <div class="column col-md-3">
-        <h3>Groups</h3>
-        @foreach (var group in Model.Groups)
-        {
-            @group.Name<br>
-        }
-    </div>
-    <div class="column col-md-6">
-        <h3>Students</h3>
-        @foreach (var student in Model.Students)
-        {
-            @(student.FirstName + " " + student.LastName)<br>
-        }
-    </div>
 </div>

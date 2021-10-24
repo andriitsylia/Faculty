@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Faculty.BLL.Interface;
+using Faculty.BLL.Interfaces;
 using Faculty.WEB.ViewModel;
 using Faculty.BLL.DTO;
 using System.Collections.Generic;
@@ -9,11 +9,11 @@ namespace Faculty.WEB.Controllers
     public class GroupsController : Controller
     {
         private const int AllGroups = 0;
-        private readonly IGroupsServices _groupsServices;
-        private readonly IStudentsServices _studentsServices;
+        private readonly IFacultyServices<GroupDTO> _groupsServices;
+        private readonly IFacultyServices<StudentDTO> _studentsServices;
 
-        public GroupsController(IGroupsServices groupsServices,
-                                IStudentsServices studentsServices)
+        public GroupsController(IFacultyServices<GroupDTO> groupsServices,
+                                IFacultyServices<StudentDTO> studentsServices)
         {
             _groupsServices = groupsServices;
             _studentsServices = studentsServices;
@@ -54,7 +54,7 @@ namespace Faculty.WEB.Controllers
 
         public IActionResult DeleteGroup(int groupId)
         {
-            if (!_groupsServices.Delete(new GroupDTO() { GroupId = groupId }))
+            if (_groupsServices.GetById(groupId) != null)
             {
                 ViewBag.DeleteGroup = "There are students in this group. I can't delete this group.";
             }
@@ -72,7 +72,7 @@ namespace Faculty.WEB.Controllers
             if (groupId != 0)
             {
                 model.Groups = new List<GroupDTO> { _groupsServices.GetById(groupId) };
-                model.Students = _studentsServices.GetByGroupId(groupId);
+                model.Students = _studentsServices.GetByKeyId(groupId);
             }
             else
             {
@@ -82,7 +82,5 @@ namespace Faculty.WEB.Controllers
 
             return model;
         }
-
-
     }
 }

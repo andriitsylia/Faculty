@@ -1,19 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Faculty.BLL.Interface;
 using Faculty.WEB.ViewModel;
 using Faculty.BLL.DTO;
 using System.Collections.Generic;
+using Faculty.BLL.Interfaces;
 
 namespace Faculty.WEB.Controllers
 {
     public class CoursesController : Controller
     {
         private const int AllCourses = 0;
-        private readonly ICoursesServices _coursesServices;
-        private readonly IGroupsServices _groupsServices;
+        private readonly IFacultyServices<CourseDTO> _coursesServices;
+        private readonly IFacultyServices<GroupDTO> _groupsServices;
 
-        public CoursesController(ICoursesServices coursesServices,
-                                 IGroupsServices groupsServices)
+        public CoursesController(IFacultyServices<CourseDTO> coursesServices,
+                                 IFacultyServices<GroupDTO> groupsServices)
         {
             _coursesServices = coursesServices;
             _groupsServices = groupsServices;
@@ -40,7 +40,7 @@ namespace Faculty.WEB.Controllers
             if (courseId != 0)
             {
                 model.Courses = new List<CourseDTO> { _coursesServices.GetById(courseId) };
-                model.Groups = _groupsServices.GetByCourseId(courseId);
+                model.Groups = _groupsServices.GetByKeyId(courseId);
             }
             else
             {

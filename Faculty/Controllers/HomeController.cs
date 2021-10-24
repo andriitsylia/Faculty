@@ -1,4 +1,5 @@
-﻿using Faculty.BLL.Interface;
+﻿using Faculty.BLL.DTO;
+using Faculty.BLL.Interfaces;
 using Faculty.WEB.ViewModel;
 using Microsoft.AspNetCore.Mvc;
 
@@ -6,13 +7,13 @@ namespace Faculty.WEB.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ICoursesServices _coursesServices;
-        private readonly IGroupsServices _groupsServices;
-        private readonly IStudentsServices _studentsServices;
+        private readonly IFacultyServices<CourseDTO> _coursesServices;
+        private readonly IFacultyServices<GroupDTO> _groupsServices;
+        private readonly IFacultyServices<StudentDTO> _studentsServices;
 
-        public HomeController(ICoursesServices coursesService,
-                              IGroupsServices groupsServices,
-                              IStudentsServices studentsServices)
+        public HomeController(IFacultyServices<CourseDTO> coursesService,
+                              IFacultyServices<GroupDTO> groupsServices,
+                              IFacultyServices<StudentDTO> studentsServices)
         {
             _coursesServices = coursesService;
             _groupsServices = groupsServices;

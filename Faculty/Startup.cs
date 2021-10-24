@@ -7,9 +7,10 @@ using Microsoft.Extensions.Hosting;
 using Faculty.DAL.Repositories;
 using Faculty.DAL.EF;
 using Faculty.DAL.Interfaces;
-using Faculty.BLL.Interface;
 using Faculty.DAL.Entities;
 using Faculty.BLL.Services;
+using Faculty.BLL.Interfaces;
+using Faculty.BLL.DTO;
 
 namespace Faculty.WEB
 {
@@ -29,12 +30,12 @@ namespace Faculty.WEB
             string dbConnection = dbConnectionBuilder.GetConnectionString("DefaultConnection");
             services.AddDbContext<AppContext>(options => options.UseSqlServer(dbConnection));
 
-            services.AddTransient<ICoursesRepository, CoursesRepository>();
-            services.AddTransient<IGroupsRepository, GroupsRepository>();
-            services.AddTransient<IStudentsRepository, StudentsRepository>();
-            services.AddTransient<ICoursesServices, CoursesServices>();
-            services.AddTransient<IGroupsServices, GroupsServices>();
-            services.AddTransient<IStudentsServices, StudentsServices>();
+            services.AddTransient<IFacultyRepository<Course>, FacultyRepository<Course>>();
+            services.AddTransient<IFacultyRepository<Group>, FacultyRepository<Group>>();
+            services.AddTransient<IFacultyRepository<Student>, FacultyRepository<Student>>();
+            services.AddTransient<IFacultyServices<CourseDTO>, CoursesServices>();
+            services.AddTransient<IFacultyServices<GroupDTO>, GroupsServices>();
+            services.AddTransient<IFacultyServices<StudentDTO>, StudentsServices>();
 
             services.AddControllersWithViews();
         }

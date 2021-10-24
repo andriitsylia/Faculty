@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Faculty.BLL.Interface;
+using Faculty.BLL.Interfaces;
 using Faculty.WEB.ViewModel;
 using Faculty.BLL.DTO;
 using System.Collections.Generic;
@@ -10,10 +10,10 @@ namespace Faculty.WEB.Controllers
     {
         private const int AllStudents = 0;
 
-        private readonly IStudentsServices _studentsServices;
+        private readonly IFacultyServices<StudentDTO> _studentsServices;
          
 
-        public StudentsController(IStudentsServices studentsServices)
+        public StudentsController(IFacultyServices<StudentDTO> studentsServices)
         {
             _studentsServices = studentsServices;
         }
