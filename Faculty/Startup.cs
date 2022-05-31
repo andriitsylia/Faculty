@@ -26,9 +26,10 @@ namespace Faculty.WEB
 
         public void ConfigureServices(IServiceCollection services)
         {
-            dbConnectionBuilder = new ConfigurationBuilder().AddJsonFile("dbsettings.json").Build();
-            string dbConnection = dbConnectionBuilder.GetConnectionString("DefaultConnection");
-            services.AddDbContext<AppContext>(options => options.UseSqlServer(dbConnection));
+            //dbConnectionBuilder = new ConfigurationBuilder().AddJsonFile("dbsettings.json").Build();
+            //string dbConnection = dbConnectionBuilder.GetConnectionString("DefaultConnection");
+            //services.AddDbContext<FacultyContext>(options => options.UseSqlServer(dbConnection));
+            services.AddDbContext<FacultyContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddTransient<IFacultyRepository<Course>, FacultyRepository<Course>>();
             services.AddTransient<IFacultyRepository<Group>, FacultyRepository<Group>>();

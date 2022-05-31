@@ -1,12 +1,13 @@
 ﻿using Faculty.DAL.Entities;
+using Faculty.DAL.EF;
 using System;
-using AppContext = Faculty.DAL.EF.AppContext;
+//using FacultyContext = Faculty.DAL.EF.FacultyContext;
 
 namespace Faculty.DAL.Repositories
 {
     public class UnitOfWork : IDisposable
     {
-        private readonly AppContext _appContext;
+        private readonly FacultyContext _facultyContext;
         private FacultyRepository<Course> _courseRepository;
         private FacultyRepository<Group> _groupRepository;
         private FacultyRepository<Student> _studentRepository;
@@ -17,7 +18,7 @@ namespace Faculty.DAL.Repositories
             {
                 if (_courseRepository == null)
                 {
-                    _courseRepository = new FacultyRepository<Course>(_appContext);
+                    _courseRepository = new FacultyRepository<Course>(_facultyContext);
                 }
                 return _courseRepository;
             }
@@ -29,7 +30,7 @@ namespace Faculty.DAL.Repositories
             {
                 if (_groupRepository == null)
                 {
-                    _groupRepository = new FacultyRepository<Group>(_appContext);
+                    _groupRepository = new FacultyRepository<Group>(_facultyContext);
                 }
                 return _groupRepository;
             }
@@ -41,20 +42,20 @@ namespace Faculty.DAL.Repositories
             {
                 if (_studentRepository == null)
                 {
-                    _studentRepository = new FacultyRepository<Student>(_appContext);
+                    _studentRepository = new FacultyRepository<Student>(_facultyContext);
                 }
                 return _studentRepository;
             }
         }
 
-        public UnitOfWork(AppContext appContext)
+        public UnitOfWork(FacultyContext facultyContext)
         {
-            _appContext = appContext;
+            _facultyContext = facultyContext;
         }
 
         public void Save()
         {
-            _appContext.SaveChanges();
+            _facultyContext.SaveChanges();
         }
 
         private bool disposed = false;
@@ -65,7 +66,7 @@ namespace Faculty.DAL.Repositories
             {
                 if (disposing)
                 {
-                    _appContext.Dispose();
+                    _facultyContext.Dispose();
                 }
             }
             disposed = true;

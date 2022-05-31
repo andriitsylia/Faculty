@@ -3,22 +3,24 @@ using Faculty.DAL.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Faculty.DAL.Migrations
 {
-    [DbContext(typeof(AppContext))]
-    partial class AppContextModelSnapshot : ModelSnapshot
+    [DbContext(typeof(FacultyContext))]
+    [Migration("20220531105218_InitialMigration")]
+    partial class InitialMigration
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.10")
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Faculty.Models.Course", b =>
+            modelBuilder.Entity("Faculty.DAL.Entities.Course", b =>
                 {
                     b.Property<int>("CourseId")
                         .ValueGeneratedOnAdd()
@@ -59,7 +61,7 @@ namespace Faculty.DAL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Faculty.Models.Group", b =>
+            modelBuilder.Entity("Faculty.DAL.Entities.Group", b =>
                 {
                     b.Property<int>("GroupId")
                         .ValueGeneratedOnAdd()
@@ -119,7 +121,7 @@ namespace Faculty.DAL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Faculty.Models.Student", b =>
+            modelBuilder.Entity("Faculty.DAL.Entities.Student", b =>
                 {
                     b.Property<int>("StudentId")
                         .ValueGeneratedOnAdd()
@@ -568,9 +570,9 @@ namespace Faculty.DAL.Migrations
                         });
                 });
 
-            modelBuilder.Entity("Faculty.Models.Group", b =>
+            modelBuilder.Entity("Faculty.DAL.Entities.Group", b =>
                 {
-                    b.HasOne("Faculty.Models.Course", "Course")
+                    b.HasOne("Faculty.DAL.Entities.Course", "Course")
                         .WithMany("Groups")
                         .HasForeignKey("CourseId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -579,9 +581,9 @@ namespace Faculty.DAL.Migrations
                     b.Navigation("Course");
                 });
 
-            modelBuilder.Entity("Faculty.Models.Student", b =>
+            modelBuilder.Entity("Faculty.DAL.Entities.Student", b =>
                 {
-                    b.HasOne("Faculty.Models.Group", "Group")
+                    b.HasOne("Faculty.DAL.Entities.Group", "Group")
                         .WithMany("Students")
                         .HasForeignKey("GroupId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -590,12 +592,12 @@ namespace Faculty.DAL.Migrations
                     b.Navigation("Group");
                 });
 
-            modelBuilder.Entity("Faculty.Models.Course", b =>
+            modelBuilder.Entity("Faculty.DAL.Entities.Course", b =>
                 {
                     b.Navigation("Groups");
                 });
 
-            modelBuilder.Entity("Faculty.Models.Group", b =>
+            modelBuilder.Entity("Faculty.DAL.Entities.Group", b =>
                 {
                     b.Navigation("Students");
                 });

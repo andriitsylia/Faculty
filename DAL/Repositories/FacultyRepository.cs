@@ -7,19 +7,20 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using AppContext = Faculty.DAL.EF.AppContext;
+//using FacultyContext = Faculty.DAL.EF.FacultyContext;
+
 
 namespace Faculty.DAL.Repositories
 {
     public class FacultyRepository<T> : IDisposable, IFacultyRepository<T> where T : class
     {
-        internal readonly AppContext _appContext;
+        internal readonly FacultyContext _facultyContext;
         internal readonly DbSet<T> dbSet;
 
-        public FacultyRepository(AppContext appContext)
+        public FacultyRepository(FacultyContext facultyContext)
         {
-            _appContext = appContext;
-            dbSet = _appContext.Set<T>();
+            _facultyContext = facultyContext;
+            dbSet = _facultyContext.Set<T>();
         }
 
         public IEnumerable<T> Get(Expression<Func<T, bool>> filter = null,
@@ -68,7 +69,7 @@ namespace Faculty.DAL.Repositories
 
         public void Delete(T entity)
         {
-            if (_appContext.Entry(entity).State == EntityState.Detached)
+            if (_facultyContext.Entry(entity).State == EntityState.Detached)
             {
                 dbSet.Attach(entity);
             }
@@ -79,13 +80,13 @@ namespace Faculty.DAL.Repositories
         public void Update(T entity)
         {
             dbSet.Attach(entity);
-            _appContext.Entry(entity).State = EntityState.Modified;
+            _facultyContext.Entry(entity).State = EntityState.Modified;
             Save();
         }
 
         public void Save()
         {
-            _appContext.SaveChanges();
+            _facultyContext.SaveChanges();
         }
 
         private bool disposed = false;
@@ -96,7 +97,7 @@ namespace Faculty.DAL.Repositories
             {
                 if (disposing)
                 {
-                    _appContext.Dispose();
+                    _facultyContext.Dispose();
                 }
             }
             disposed = true;

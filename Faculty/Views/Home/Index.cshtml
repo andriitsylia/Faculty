@@ -11,9 +11,12 @@
         <label for="courseId" class="col-md-2 control-label">Course:</label>
         <select name="courseId" id="courseId" class="col-md-3 form-control">
             <option value="0" selected>All</option>
-            @foreach (var course in Model.Courses)
+            @if(Model != null)
+            {
+            foreach (var course in Model.Courses)
             {
                 <option value="@course.CourseId">@course.Name</option>
+            }
             }
         </select>
         <input type="submit" asp-controller="Courses" asp-action="ChooseCourse" value="Groups">
@@ -24,9 +27,12 @@
         <label for="groupId" class="col-md-2 control-label">Group:</label>
         <select name="groupId" id="groupId" class="col-md-3 form-control">
             <option value="0" selected>All</option>
-            @foreach (var group in Model.Groups)
+            @if(Model != null)
             {
-                <option value="@group.GroupId">@group.Name</option>
+                foreach (var group in Model.Groups)
+                {
+                    <option value="@group.GroupId">@group.Name</option>
+                }
             }
         </select>
         <input type="submit" name="submit" asp-controller="Groups" asp-action="ChooseGroup" value="Students">
@@ -39,9 +45,12 @@
         <label for="studentId" class="col-md-2 control-label">Student:</label>
         <select name="studentId" id="studentId" class="col-md-3 form-control">
             <option value="0" selected>All</option>
-            @foreach (var student in Model.Students)
+            @if(Model != null)
             {
-                <option value="@student.StudentId">@(student.FirstName + " " + student.LastName)</option>
+                foreach (var student in Model.Students)
+                {
+                    <option value="@student.StudentId">@(student.FirstName + " " + student.LastName)</option>
+                }
             }
         </select>
         <input type="submit" name="edit" asp-controller="Students" asp-action="EditStudent" asp-route-id="studentId" value="Edit">

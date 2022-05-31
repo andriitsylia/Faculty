@@ -4,13 +4,13 @@ using Faculty.DAL.Entities;
 
 namespace Faculty.DAL.EF
 {
-    public class AppContext : DbContext
+    public class FacultyContext : DbContext
     {
         public DbSet<Course> Courses { get; set; }
         public DbSet<Group> Groups { get; set; }
         public DbSet<Student> Students { get; set; }
 
-        public AppContext(DbContextOptions<AppContext> options) : base(options)
+        public FacultyContext(DbContextOptions<FacultyContext> options) : base(options)
         {
         }
 

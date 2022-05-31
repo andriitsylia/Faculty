@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using Faculty.DAL.EF;
 
 namespace Faculty.DAL.Configurations
 {
@@ -11,11 +12,11 @@ namespace Faculty.DAL.Configurations
         {
             using (var scope = host.Services.CreateScope())
             {
-                using (var appContext = scope.ServiceProvider.GetRequiredService<EF.AppContext>())
+                using (var facultyContext = scope.ServiceProvider.GetRequiredService<FacultyContext>())
                 {
                     try
                     {
-                        appContext.Database.Migrate();
+                        facultyContext.Database.Migrate();
                     }
                     catch (Exception ex)
                     {
